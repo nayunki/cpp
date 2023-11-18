@@ -1,0 +1,92 @@
+#include "Bureaucrat.hpp"
+
+Bureaucrat::Bureaucrat()
+{
+}
+
+Bureaucrat::Bureaucrat(std::string name, unsigned int grade)
+: name(name), grade(grade)
+{
+	try
+	{
+		if (grade < 1)
+			throw GradeTooHighException();
+		if (grade > 150)
+			throw GradeTooLowException();
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
+
+Bureaucrat::Bureaucrat(Bureaucrat const &bu)
+{
+	*this = bu;
+}
+
+//copy assignment operator cannot change const member value
+Bureaucrat &Bureaucrat::operator=(Bureaucrat const bu)
+{
+	if (this == &bu)
+		return *this;
+	this->grade = bu.grade;
+	return *this;
+}
+
+Bureaucrat::~Bureaucrat()
+{
+}
+
+std::string Bureaucrat::getName() const
+{
+	return (this->name);
+}
+
+unsigned int Bureaucrat::getGrade() const
+{
+	return (this->grade);
+}
+
+void Bureaucrat::increment()
+{
+	try {
+		if (this->grade <= 1)
+			throw GradeTooHighException();
+		this->grade--;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
+
+void Bureaucrat::decrement()
+{
+	try {
+		if (this->grade >= 150)
+			throw GradeTooLowException();
+		this->grade++;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
+
+const char *Bureaucrat::GradeTooHighException::what() const throw()
+{
+	return ("grade too high");
+}
+
+const char *Bureaucrat::GradeTooLowException::what() const throw()
+{
+	return ("grade too low");
+}
+
+std::ostream &operator<<(std::ostream &out, const Bureaucrat &bu)
+{
+	out << bu.getName() << ", bureaucrat grade " << bu.getGrade() << ".";
+	return (out);
+}
+// 스트림에 값 넣을 땐 const 필수 ?
