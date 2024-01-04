@@ -20,13 +20,17 @@ class	Bureaucrat
 		unsigned int getGrade() const;
 		void increment();
 		void decrement();
-		class	GradeTooHighException : public std::exception
-		{
-			const char *what() const throw();
+		class	GradeTooHighException : public std::exception {
+			const char *what() const noexcept
+			{
+				return "GradeTooHighException\n";
+			}
 		};
-		class	GradeTooLowException : public std::exception
-		{
-			const char *what() const throw();
+		class	GradeTooLowException : public std::exception {
+			const char *what() const noexcept
+			{
+				return "GradeTooLowException\n";
+			}
 		};
 };
 
