@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 Bureaucrat::Bureaucrat()
 {
@@ -7,17 +8,10 @@ Bureaucrat::Bureaucrat()
 Bureaucrat::Bureaucrat(std::string name, unsigned int grade)
 : name(name), grade(grade)
 {
-	try
-	{
-		if (grade < 1)
-			throw GradeTooHighException();
-		if (grade > 150)
-			throw GradeTooLowException();
-	}
-	catch (std::exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	if (grade < 1)
+		throw GradeTooHighException();
+	if (grade > 150)
+		throw GradeTooLowException();
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &bu)
@@ -57,7 +51,7 @@ void Bureaucrat::increment()
 	}
 	catch (const std::exception &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 }
 
@@ -70,27 +64,32 @@ void Bureaucrat::decrement()
 	}
 	catch (const std::exception &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 }
 
 void Bureaucrat::signForm(Form &formToBeSigned)
 {
-	formToBeSigned.beSigned(*this);
 	if (formToBeSigned.getIsSigned() == true)
-		std::cout << this->name << " signed " << formToBeSigned.getName() << std::endl;
+		std::cout << formToBeSigned.getName() << " is already signed" << std::endl;
 	else
-		std::cout << this->name << " couldn't sign " << formToBeSigned.getName() << " because grade is too low.";
+	{
+		formToBeSigned.beSigned(*this);
+		if (formToBeSigned.getIsSigned() == true)
+			std::cout << this->name << " signed " << formToBeSigned.getName() << std::endl;
+		else
+			std::cout << this->name << " couldn't sign " << formToBeSigned.getName() << " because grade is too low.\n";
+	}
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return ("grade too high");
+	return "GradeTooHighException\n";
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return ("grade too low");
+	return "GradeTooLowException\n";
 }
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &bu)
@@ -98,4 +97,3 @@ std::ostream &operator<<(std::ostream &out, const Bureaucrat &bu)
 	out << bu.getName() << ", bureaucrat grade " << bu.getGrade() << ".";
 	return (out);
 }
-// 스트림에 값 넣을 땐 const 필수 ?
