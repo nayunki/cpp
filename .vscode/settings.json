@@ -64,6 +64,12 @@
 		"bit": "cpp",
 		"functional": "cpp",
 		"iterator": "cpp",
-		"utility": "cpp"
+		"utility": "cpp",
+		"fstream": "cpp",
+		"__functional_03": "cpp",
+		"deque": "cpp",
+		"memory_resource": "cpp",
+		"filesystem": "cpp",
+		"stack": "cpp"
 	}
 }
