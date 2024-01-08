@@ -1,12 +1,7 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
-Form::Form()
-: gradeSignable(150), gradeExecutable(150)
-{
-}
-
-Form::Form(std::string name, unsigned int gradeSignable, unsigned int gradeExecutable)
+AForm::AForm(std::string name, unsigned int gradeSignable, unsigned int gradeExecutable)
 : name(name), gradeSignable(gradeSignable), gradeExecutable(gradeExecutable)
 {
 	if (gradeSignable < 1 || gradeExecutable < 1)
@@ -16,14 +11,14 @@ Form::Form(std::string name, unsigned int gradeSignable, unsigned int gradeExecu
 	this->isSigned = false;
 }
 
-Form::Form(Form const &form)
+AForm::AForm(AForm const &form)
 : gradeSignable(form.getGradeSignable()), gradeExecutable(form.getGradeExecutable())
 {
 	*this = form;
 }
 
 //copy assignment operator cannot change const member value
-Form &Form::operator=(Form const &form)
+AForm &AForm::operator=(AForm const &form)
 {
 	if (this == &form)
 		return *this;
@@ -31,31 +26,36 @@ Form &Form::operator=(Form const &form)
 	return *this;
 }
 
-Form::~Form()
+AForm::~AForm()
 {
 }
 
-std::string Form::getName() const
+std::string AForm::getName() const
 {
 	return (this->name);
 }
 
-unsigned int Form::getGradeSignable() const
+unsigned int AForm::getGradeSignable() const
 {
 	return (this->gradeSignable);
 }
 
-unsigned int Form::getGradeExecutable() const
+unsigned int AForm::getGradeExecutable() const
 {
 	return (this->gradeExecutable);
 }
 
-bool Form::getIsSigned() const
+bool AForm::getIsSigned() const
 {
 	return (this->isSigned);
 }
 
-void Form::beSigned(const Bureaucrat &bu)
+void AForm::setIsSigned(bool sign)
+{
+	this->isSigned = sign;
+}
+
+void AForm::beSigned(const Bureaucrat &bu)
 {
 	try
 	{
@@ -69,17 +69,22 @@ void Form::beSigned(const Bureaucrat &bu)
 	}
 }
 
-const char *Form::GradeTooHighException::what() const throw()
+const char *AForm::GradeTooHighException::what() const throw()
 {
 	return "GradeTooHighException\n";
 }
 
-const char *Form::GradeTooLowException::what() const throw()
+const char *AForm::GradeTooLowException::what() const throw()
 {
 	return "GradeTooLowException\n";
 }
 
-std::ostream &operator<<(std::ostream &out, const Form &form)
+const char *AForm::NotSignedException::what() const throw()
+{
+	return "NotSignedException\n";
+}
+
+std::ostream &operator<<(std::ostream &out, const AForm &form)
 {
 	out << form.getName() << ", Form gradeSignable " << form.getGradeSignable() 
 		<< ", Form gradeExecutable " << form.getGradeExecutable() << ", Form isSigned " <<

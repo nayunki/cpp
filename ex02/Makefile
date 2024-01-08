@@ -5,6 +5,10 @@ NAME = Bureaucrat
 
 SRCS = \
 	Bureaucrat.cpp \
+	AForm.cpp \
+	ShrubberyCreationForm.cpp \
+	RobotomyRequestForm.cpp \
+	PresidentialPardonForm.cpp \
 	main.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
@@ -23,6 +27,7 @@ clean :
 fclean :
 	make clean
 	$(RM) $(NAME)
+	$(RM) *_shrubbery
 
 re :
 	make fclean

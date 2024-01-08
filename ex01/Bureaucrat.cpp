@@ -20,7 +20,7 @@ Bureaucrat::Bureaucrat(Bureaucrat const &bu)
 }
 
 //copy assignment operator cannot change const member value
-Bureaucrat &Bureaucrat::operator=(Bureaucrat const bu)
+Bureaucrat &Bureaucrat::operator=(Bureaucrat const &bu)
 {
 	if (this == &bu)
 		return *this;
