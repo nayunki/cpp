@@ -11,6 +11,7 @@ Intern::Intern(Intern const &intern)
 
 Intern &Intern::operator=(Intern const &intern)
 {
+	(void)intern;
 	return *this;
 }
 
@@ -20,9 +21,31 @@ Intern::~Intern()
 
 AForm *Intern::makeForm(std::string name, std::string target)
 {
-	
+	std::string formType[3] = {"shrubbery creation", "robotomy request", "presidential pardon"};
+	int	i = 0;
+	while (i < 3)
+	{
+		if (name == formType[i])
+		{
+			std::cout << "Intern creates " << formType[i] << std::endl;
+			break;
+		}
+		i++;
+	}
+	switch (i)
+	{
+	case 0:
+		return new ShrubberyCreationForm(target);
+	case 1:
+		return new RobotomyRequestForm(target);
+	case 2:
+		return new PresidentialPardonForm(target);
+	default:
+		throw InvalidName();
+	}
 }
-// name[0] s, r, p로 나눠도 댈듯 ㅎ
-// func[0], 1, 2로 나눠서? . . 아님 스위치? ㅎ. . 
-// switch문은 enum / int 타입으로만 경우를 나눌 수 있다내요 ㅠ.ㅠ.ㅠ.ㅠ.
-// 그래서 함수포인터의 사용이 강제됩니다 흑 흑흑흑긓!!!
+
+const char *Intern::InvalidName::what() const throw()
+{
+	return "InvalidName\n";
+}

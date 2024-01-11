@@ -2,7 +2,7 @@
 #include "Bureaucrat.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string target)
-: AForm(target, 145, 137), target(target)
+: AForm("shrubbery creation form", 145, 137), target(target)
 {
 }
 
