@@ -5,7 +5,7 @@
 # include <iostream>
 # include <exception>
 
-class Form;
+class AForm;
 
 class	Bureaucrat
 {
@@ -18,11 +18,12 @@ public:
 	Bureaucrat(Bureaucrat const &bu);
 	Bureaucrat &operator=(Bureaucrat const &bu);
 	~Bureaucrat();
-	std::string getName() const;
-	unsigned int getGrade() const;
+	const std::string getName() const;
+	const unsigned int getGrade() const;
 	void increment();
 	void decrement();
-	void signForm(Form &formToBeSigned);
+	void signForm(AForm &formToBeSigned);
+	void executeForm(AForm const &form);
 	class	GradeTooHighException : public std::exception {
 		const char *what() const throw();
 	};

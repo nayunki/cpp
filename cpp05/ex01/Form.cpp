@@ -35,17 +35,17 @@ Form::~Form()
 {
 }
 
-std::string Form::getName() const
+const std::string Form::getName() const
 {
 	return (this->name);
 }
 
-unsigned int Form::getGradeSignable() const
+const unsigned int Form::getGradeSignable() const
 {
 	return (this->gradeSignable);
 }
 
-unsigned int Form::getGradeExecutable() const
+const unsigned int Form::getGradeExecutable() const
 {
 	return (this->gradeExecutable);
 }

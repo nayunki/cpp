@@ -30,17 +30,17 @@ AForm::~AForm()
 {
 }
 
-std::string AForm::getName() const
+const std::string AForm::getName() const
 {
 	return (this->name);
 }
 
-unsigned int AForm::getGradeSignable() const
+const unsigned int AForm::getGradeSignable() const
 {
 	return (this->gradeSignable);
 }
 
-unsigned int AForm::getGradeExecutable() const
+const unsigned int AForm::getGradeExecutable() const
 {
 	return (this->gradeExecutable);
 }

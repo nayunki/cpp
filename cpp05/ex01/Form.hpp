@@ -19,9 +19,9 @@ public:
 	Form(Form const &form);
 	Form &operator=(Form const &form);
 	~Form();
-	std::string getName() const;
-	unsigned int getGradeSignable() const;
-	unsigned int getGradeExecutable() const;
+	const std::string getName() const;
+	const unsigned int getGradeSignable() const;
+	const unsigned int getGradeExecutable() const;
 	bool getIsSigned() const;
 	void beSigned(const Bureaucrat &bu);
 	class	GradeTooHighException : public std::exception

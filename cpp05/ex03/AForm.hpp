@@ -18,9 +18,9 @@ public:
 	AForm(AForm const &form);
 	AForm &operator=(AForm const &form);
 	virtual ~AForm();
-	std::string getName() const;
-	unsigned int getGradeSignable() const;
-	unsigned int getGradeExecutable() const;
+	const std::string getName() const;
+	const unsigned int getGradeSignable() const;
+	const unsigned int getGradeExecutable() const;
 	bool getIsSigned() const;
 	void setIsSigned(bool sign);
 	void beSigned(const Bureaucrat &bu);
