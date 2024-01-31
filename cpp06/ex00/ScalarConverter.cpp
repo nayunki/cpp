@@ -19,17 +19,16 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
-// any function to convert from a str to int (atoi), to a float or a double
-// class must not be instanciable by users
-
 void ScalarConverter::convert(std::string str) {
 	std::stringstream ss;
 	double d;
-	bool sign = PLUS;
+	// bool sign = PLUS;
+	std::string sign = "";
+	std::string zero = "";
 
 	if (str.front() == '+' || str.front() == '-') {
 		if (str.front() == '-') {
-			sign = MINUS;
+			sign = "-";
 		}
 		str.erase(str.begin()); // 첫 문자 (부호) 제거
 	}
@@ -40,6 +39,7 @@ void ScalarConverter::convert(std::string str) {
 	ss << str;
 	ss >> d;
 
+	// 하 ......... 이렇게했더니 0.0부터 impossible나옴 ㅠㅠ !!! find 0 / . 해서 아닌거 있는 걸 걸러야 할까 ?
 	if (str == "" || (d == 0 && str != "0")) { // inf나 nan 아닌 문자열
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
@@ -53,21 +53,22 @@ void ScalarConverter::convert(std::string str) {
 		std::cout << "int: impossible" << std::endl;
 	} else if (d > INT_MAX) {
 		std::cout << "char: Non displayable" << std::endl;
-		if (sign == MINUS && d == 2147483648)
+		if (sign == "-" && d == 2147483648)
 			std::cout << "int: " << -2147483648 << std::endl;
 		else
 			std::cout << "int: Non displayable" << std::endl;
-	} else if (d < 33 || d > 129) { // 32 ~ 128까지 printable
-		std::cout << "char: Non displayable" << std::endl;
+	} else if (sign == "" && 32 <= d && d < 129) { // 32 ~ 128까지 printable
+		std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
 		std::cout << "int: " << static_cast<int>(d) << std::endl;
 	} else {
-		std::cout << "char: " << static_cast<char>(d) << std::endl;
-		std::cout << "int: " << static_cast<int>(d) << std::endl;
+		std::cout << "char: Non displayable" << std::endl;
+		std::cout << "int: " << sign << static_cast<int>(d) << std::endl;
 	}
 
-// float이랑 double .0은 내가 붙여줘야 하는걸까.? ㅠ ㅠ
-// double을 string으로 바꿨을 때 .이 없으면 .0을 붙여주자 . . !
-//	find(str.begin(), str.end(), '.')
-	std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
-	std::cout << "double: " << d << std::endl;
+	if (static_cast<int>(d) == d) // => .0 추가
+		zero = ".0";
+
+	std::cout << "float: " << sign << static_cast<float>(d) << zero << "f" << std::endl;
+	std::cout << "double: " << sign << d << zero << std::endl;
 }
+// float이랑 double은 inf 있어서 오버플로우 안 일어나는 거에요?ㅅ?

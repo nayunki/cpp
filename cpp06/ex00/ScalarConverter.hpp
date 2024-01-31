@@ -10,9 +10,11 @@
 
 class ScalarConverter
 {
-public:
+// class must not be instanciable by users => singleton
+private:
 	ScalarConverter();
 	ScalarConverter(const ScalarConverter &obj);
+public:
 	ScalarConverter & operator=(const ScalarConverter &obj);
 	~ScalarConverter();
 	static void convert(std::string str);
