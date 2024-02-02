@@ -19,10 +19,30 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
+bool isString(std::string str, double d) {
+	if (d != 0)
+		return false;
+	// d == 0 만  남음
+
+	bool dot = false;
+	for (int i = 0; str[i]; i++) {
+		if (str[i] == '.' && dot)
+			return true;
+		else if (str[i] == '.')
+			dot = true;
+		else if (str[i] == '0')
+			;
+		else
+			return true;
+	}
+	return false;
+	// str이 0과 .으로만 이루어져있는지 확인.. 근데 .은 한번만 있어야됨 .. <- 사실 다른 소수들에선 고려 x
+	// str 한 글자씩 보면서 0이면 넘어가기, .이면 체크, 다른거면 리턴 1
+}
+
 void ScalarConverter::convert(std::string str) {
-	std::stringstream ss;
+	char *end;
 	double d;
-	// bool sign = PLUS;
 	std::string sign = "";
 	std::string zero = "";
 
@@ -36,11 +56,9 @@ void ScalarConverter::convert(std::string str) {
 	if (str.back() == 'f' && str != "inf")
 		str.erase(str.end() - 1); // 마지막 문자 (float의 f) 제거
 
-	ss << str;
-	ss >> d;
+	d = strtod(str.c_str(), &end);
 
-	// 하 ......... 이렇게했더니 0.0부터 impossible나옴 ㅠㅠ !!! find 0 / . 해서 아닌거 있는 걸 걸러야 할까 ?
-	if (str == "" || (d == 0 && str != "0")) { // inf나 nan 아닌 문자열
+	if (str == "" || isString(str, d)) { // inf나 nan 아닌 문자열
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
 		std::cout << "float: impossible" << std::endl;
@@ -69,6 +87,6 @@ void ScalarConverter::convert(std::string str) {
 		zero = ".0";
 
 	std::cout << "float: " << sign << static_cast<float>(d) << zero << "f" << std::endl;
+	std::cout << std::setprecision(16); // 이거 float 위로 올리면 값이 너무 이상해지는 이유좀 ㅠㅠ ~~!
 	std::cout << "double: " << sign << d << zero << std::endl;
 }
-// float이랑 double은 inf 있어서 오버플로우 안 일어나는 거에요?ㅅ?
