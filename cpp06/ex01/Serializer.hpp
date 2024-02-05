@@ -2,15 +2,19 @@
 # define SERIALIZER_HPP
 
 # include <iostream>
+# include <cstdint>
 
-class Data;
+struct Data {
+	int num;
+	std::string str;
+};
 
 class Serializer {
 private:
 	Serializer();
 	Serializer(const Serializer & obj);
-public:
 	Serializer & operator=(const Serializer &obj);
+public:
 	~Serializer();
 	static uintptr_t serialize(Data * ptr);
 	static Data *deserialze(uintptr_t raw);

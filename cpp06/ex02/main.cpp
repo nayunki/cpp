@@ -30,20 +30,24 @@ void identify(Base& p) { // reference는 Null 없어서 실패시 std::bad_cast 
 	try {
 		A a = dynamic_cast<A &>(p);
 		std::cout << "A" << std::endl;
+		return ;
 	}
 	catch (std::exception & e) {
 	}
 	try {
 		B b = dynamic_cast<B &>(p);
 		std::cout << "B" << std::endl;
+		return ;
 	}
 	catch (std::exception & e) {
 	}
 	try {
 		C c = dynamic_cast<C &>(p);
 		std::cout << "C" << std::endl;
+		return ;
 	}
 	catch (std::exception & e) {
+		throw (std::bad_cast());
 	}
 }
 
@@ -63,12 +67,17 @@ int	main() {
 
 	std::cout << "\n\n";
 	
-	std::cout << "Identification by reference" << std::endl;
-	identify(a);
-	identify(b);
-	identify(c);
-	identify(d);
-	identify(random);
+	try {
+		std::cout << "Identification by reference" << std::endl;
+		identify(a);
+		identify(b);
+		identify(c);
+		// identify(d);
+		identify(random);
+	}
+	catch (std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
 	
 	delete random;
 

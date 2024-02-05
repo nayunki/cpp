@@ -1,10 +1,13 @@
 CC = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-NAME = Serializer
+NAME = Base
 
 SRCS = \
-	Serializer.cpp \
+	Base.cpp \
+	A.cpp \
+	B.cpp \
+	C.cpp \
 	main.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
