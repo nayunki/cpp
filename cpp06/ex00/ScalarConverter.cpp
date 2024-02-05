@@ -22,7 +22,6 @@ ScalarConverter::~ScalarConverter()
 bool isString(std::string str, double d) {
 	if (d != 0)
 		return false;
-	// d == 0 만  남음
 
 	bool dot = false;
 	for (int i = 0; str[i]; i++) {
@@ -83,10 +82,10 @@ void ScalarConverter::convert(std::string str) {
 		std::cout << "int: " << sign << static_cast<int>(d) << std::endl;
 	}
 
-	if (static_cast<int>(d) == d) // => .0 추가
+	if (static_cast<int>(d) == d)
 		zero = ".0";
 
 	std::cout << "float: " << sign << static_cast<float>(d) << zero << "f" << std::endl;
-	std::cout << std::setprecision(16); // 이거 float 위로 올리면 값이 너무 이상해지는 이유좀 ㅠㅠ ~~!
+	std::cout << std::setprecision(16);
 	std::cout << "double: " << sign << d << zero << std::endl;
 }
