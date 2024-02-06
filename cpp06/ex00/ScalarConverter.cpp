@@ -35,8 +35,6 @@ bool isString(std::string str, double d) {
 			return true;
 	}
 	return false;
-	// str이 0과 .으로만 이루어져있는지 확인.. 근데 .은 한번만 있어야됨 .. <- 사실 다른 소수들에선 고려 x
-	// str 한 글자씩 보면서 0이면 넘어가기, .이면 체크, 다른거면 리턴 1
 }
 
 void ScalarConverter::convert(std::string str) {
