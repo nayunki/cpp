@@ -4,7 +4,7 @@
 # include <iostream>
 
 template <typename T>
-void swap(T &a, T &b) {
+void swap(T &a, T &b) { // types of A and B are equal
 	T tmp = a;
 	a = b;
 	b = tmp;
