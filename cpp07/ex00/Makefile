@@ -1,13 +1,9 @@
 CC = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-NAME = Base
+NAME = Template
 
 SRCS = \
-	Base.cpp \
-	A.cpp \
-	B.cpp \
-	C.cpp \
 	main.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
