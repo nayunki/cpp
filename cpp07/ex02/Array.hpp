@@ -7,13 +7,38 @@
 template <typename T>
 class Array {
 private:
-    T array[];
+    T *array;
 public:
-    Array();
-    Array(unsigned int n);
-    Array(const Array & obj);
-    Array & operator=(const Array & obj);
-    ~Array();
+    Array() {
+		T *array = new T();
+	}
+    Array(unsigned int n) {
+		T *array = new T[n];
+	}
+    Array(const Array & obj) {
+		*this = obj;
+	}
+    Array & operator=(const Array & obj) {
+		for (size_t i = 0; i < obj.size(); i++) {
+			this->array[i] = obj.array[i];
+		}
+		return (*this);
+	}
+    ~Array() {
+		delete[] array;
+	}
+	size_t size() const {
+		return (this->array.length());
+	}
+	T & operator[](size_t index) {
+		if (index >= this->size())
+			throw std::exception();
+		return (this->array[index]);
+	}
 };
+
+// # include "Array.tpp"
+// declaration and definition of template class/function both should be in header file.
+// in case you want to separate them, you can include .tpp file at the end of the header file. 
 
 #endif
