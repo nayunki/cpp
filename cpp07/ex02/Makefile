@@ -1,7 +1,7 @@
 CC = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-NAME = Template
+NAME = Array
 
 SRCS = \
 	main.cpp \

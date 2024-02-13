@@ -8,30 +8,37 @@ template <typename T>
 class Array {
 private:
     T *array;
+	unsigned int sizeOfArray;
 public:
     Array() {
-		T *array = new T();
+		T *array = new T[0];
+		sizeOfArray = 0;
 	}
     Array(unsigned int n) {
 		T *array = new T[n];
+		sizeOfArray = n;
+		std::cout << array << std::endl;
+	}
+    Array & operator=(const Array & obj) {
+		delete[] this->array;
+		this->array = new T[obj.size()];
+		for (unsigned int i = 0; i < obj.size(); i++) {
+			this->array[i] = obj.array[i];
+		}
+		this->sizeOfArray = obj.size();
+		return (*this);
 	}
     Array(const Array & obj) {
 		*this = obj;
 	}
-    Array & operator=(const Array & obj) {
-		for (size_t i = 0; i < obj.size(); i++) {
-			this->array[i] = obj.array[i];
-		}
-		return (*this);
-	}
     ~Array() {
 		delete[] array;
 	}
-	size_t size() const {
-		return (this->array.length());
+	unsigned int size() const {
+		return (this->sizeOfArray);
 	}
-	T & operator[](size_t index) {
-		if (index >= this->size())
+	T & operator[](unsigned int index) {
+		if (index >= this->sizeOfArray)
 			throw std::exception();
 		return (this->array[index]);
 	}
