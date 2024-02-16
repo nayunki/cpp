@@ -10,29 +10,33 @@ private:
     T *array;
 	unsigned int sizeOfArray;
 public:
-    Array() {
-		T *array = new T[0];
-		sizeOfArray = 0;
+    Array() : array(NULL), sizeOfArray(0) {
 	}
-    Array(unsigned int n) {
-		T *array = new T[n];
-		sizeOfArray = n;
-		std::cout << array << std::endl;
+    Array(int n) {
+        if (n < 0)
+            throw std::exception();
+        sizeOfArray = n;
+		array = new T[sizeOfArray];
 	}
     Array & operator=(const Array & obj) {
-		delete[] this->array;
-		this->array = new T[obj.size()];
-		for (unsigned int i = 0; i < obj.size(); i++) {
-			this->array[i] = obj.array[i];
-		}
-		this->sizeOfArray = obj.size();
+        if (this != &obj) {
+            if (this->sizeOfArray)
+                delete[] this->array;
+            this->sizeOfArray = obj.size();
+            this->array = new T[sizeOfArray];
+            for (unsigned int i = 0; i < sizeOfArray; i++) {
+                this->array[i] = obj.array[i];
+            }
+        }
 		return (*this);
 	}
-    Array(const Array & obj) {
+    Array(const Array & obj) : array(NULL), sizeOfArray(0) {
 		*this = obj;
 	}
     ~Array() {
-		delete[] array;
+		delete[] this->array;
+        this->array = NULL;
+        this->sizeOfArray = 0;
 	}
 	unsigned int size() const {
 		return (this->sizeOfArray);

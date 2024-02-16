@@ -27,9 +27,9 @@ int main( void ) {
 	}
 	std::cout << std::endl;
 
-	::iter(intArray, 10, plusOne);
-	::iter(charArray, 10, plusOne);
-	::iter(doubleArray, 10, plusOne);
+	::iter(intArray, 10, plusOne<int>);
+	::iter(charArray, 10, plusOne<char>);
+	::iter(doubleArray, 10, plusOne<double>);
 
 	std::cout << "After iter" << std::endl;
 
