@@ -3,13 +3,13 @@
 
 # include <iostream>
 # include <algorithm>
-# include <vector>
 # include <exception>
 
+// container에서 처음으로 등장하는 value 찾기
 template <typename T>
-int EasyFind(T container, int value) {
-    for (T::iterator it = T.begin(); it != T.end(); it++) {
-        if (it == value)
+typename T::iterator EasyFind(T &ctn, int value) {
+    for (typename T::iterator it = ctn.begin(); it != ctn.end(); it++) {
+        if (*it == value)
             return (it);
     }
     throw std::exception();
