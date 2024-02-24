@@ -21,6 +21,8 @@ public:
     void fillSpan();
     int shortestSpan();
     int longestSpan();
+    static int getRandomNumber();
+    // void print();
 };
 
 #endif

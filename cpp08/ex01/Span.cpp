@@ -27,12 +27,15 @@ void Span::addNumber(int num) {
     this->vec.push_back(num);
 }
 
-// 이거 iterator 사용으로 바꿔야 할까 ? ㅠ
+int Span::getRandomNumber() {
+    return (rand() % 10000);
+}
+
 void Span::fillSpan() {
     srand(time(NULL));
-    for (unsigned int i = 0; i < this->len; i++) {
-        this->addNumber(rand());
-    }
+    this->vec.resize(this->len);
+    std::generate(this->vec.begin(), this->vec.end(), getRandomNumber);
+    // 내부 인자로 일반 멤버 함수 호출 불가능 (인스턴스화 되지 않아서)
 }
 
 int Span::shortestSpan() {
@@ -45,7 +48,7 @@ int Span::shortestSpan() {
     unsigned int span = 0;
     unsigned int res = INT_MAX;
     std::vector<int>::iterator it = dup.begin();
-    for (;it != dup.end() - 1; it++) {
+    for (;it != dup.end() - 2; it++) {
         span = *(it + 1) - *it; // *(it + 1)이 항상 더 큼
         if (span < res)
             res = span;
@@ -61,3 +64,11 @@ int Span::longestSpan() {
     std::sort(dup.begin(), dup.end());
     return (*(dup.end() - 1) - *dup.begin());
 }
+
+// void Span::print() {
+//     std::cout << "print" << std::endl;
+//     for (unsigned int i = 0; i < this->len; i++) {
+//         std::cout << this->vec[i] << " ";
+//     }
+//     std::cout << std::endl;
+// }
