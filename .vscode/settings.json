@@ -69,6 +69,7 @@
 		"compare": "cpp",
 		"concepts": "cpp",
 		"variant": "cpp",
-		"*.tpp": "cpp"
+		"*.tpp": "cpp",
+		"list": "cpp"
 	}
 }
