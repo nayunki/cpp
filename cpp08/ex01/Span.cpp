@@ -21,10 +21,18 @@ Span & Span::operator=(const Span & obj) {
 Span::~Span() {
 }
 
-void Span::addNumber(int num){
+void Span::addNumber(int num) {
     if (this->vec.size() >= this->len)
         throw std::exception();
     this->vec.push_back(num);
+}
+
+// 이거 iterator 사용으로 바꿔야 할까 ? ㅠ
+void Span::fillSpan() {
+    srand(time(NULL));
+    for (unsigned int i = 0; i < this->len; i++) {
+        this->addNumber(rand());
+    }
 }
 
 int Span::shortestSpan() {
@@ -49,7 +57,7 @@ int Span::longestSpan() {
     if (this->vec.size() <= 1)
         throw std::exception();
 
-    int max = *std::max_element(this->vec.begin(), this->vec.end());
-    int min = *std::min_element(this->vec.begin(), this->vec.end());
-    return (max - min);
+    std::vector<int> dup = this->vec;
+    std::sort(dup.begin(), dup.end());
+    return (*(dup.end() - 1) - *dup.begin());
 }

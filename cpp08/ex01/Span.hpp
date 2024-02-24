@@ -5,6 +5,7 @@
 # include <algorithm>
 # include <exception>
 # include <vector>
+# include <ctime>
 
 class Span {
 private:
@@ -17,6 +18,7 @@ public:
     Span & operator=(const Span & obj);
     ~Span();
     void addNumber(int num);
+    void fillSpan();
     int shortestSpan();
     int longestSpan();
 };
