@@ -9,9 +9,10 @@ template <typename T>
 class MutantStack : public std::stack<T> {
 public:
     MutantStack(){};
-    MutantStack(const MutantStack & obj): std::stack<T>(obj) {};
+    MutantStack(const MutantStack & obj){*this = obj;};
     MutantStack & operator=(const MutantStack & obj){
-        *this = obj;
+        if (this != &obj)
+            this->c = obj.c;
         return *this;
     };
     ~MutantStack(){};
