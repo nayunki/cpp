@@ -1,6 +1,6 @@
 #include <vector>
 #include <list>
-#include "EasyFind.hpp"
+#include "easyfind.hpp"
 
 # define FIND 2
 # define FIND_MORE 10
@@ -20,15 +20,15 @@ int main() {
             vec.push_back(i);
             li.push_back(i);
         }
-        std::cout << "vector easyfind : " << *EasyFind(vec, FIND) << " is at index " 
-            << EasyFind(vec, FIND) - vec.begin() << "." << std::endl;
-        std::cout << "list easyfind : " << *EasyFind(li, FIND) << " is at index " 
-            << std::distance(li.begin(), EasyFind(li, FIND)) << "." << std::endl;
+        std::cout << "vector easyfind : " << *easyfind(vec, FIND) << " is at index " 
+            << easyfind(vec, FIND) - vec.begin() << "." << std::endl;
+        std::cout << "list easyfind : " << *easyfind(li, FIND) << " is at index " 
+            << std::distance(li.begin(), easyfind(li, FIND)) << "." << std::endl;
         
-        std::cout << "vector easyfind error : " << *EasyFind(vec, FIND_MORE) << " is at index " 
-            << std::distance(vec.begin(), EasyFind(vec, FIND)) << "." << std::endl;
-        std::cout << "list easyfind error : " << *EasyFind(li, FIND_MORE) << " is at index " 
-            << std::distance(li.begin(), EasyFind(li, FIND)) << "." << std::endl;
+        std::cout << "vector easyfind error : " << *easyfind(vec, FIND_MORE) << " is at index " 
+            << std::distance(vec.begin(), easyfind(vec, FIND)) << "." << std::endl;
+        std::cout << "list easyfind error : " << *easyfind(li, FIND_MORE) << " is at index " 
+            << std::distance(li.begin(), easyfind(li, FIND)) << "." << std::endl;
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;

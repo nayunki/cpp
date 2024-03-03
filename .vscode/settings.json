@@ -70,6 +70,7 @@
 		"concepts": "cpp",
 		"variant": "cpp",
 		"*.tpp": "cpp",
-		"list": "cpp"
+		"list": "cpp",
+		"filesystem": "cpp"
 	}
 }
