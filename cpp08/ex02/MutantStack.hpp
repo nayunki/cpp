@@ -22,12 +22,12 @@ public:
     typedef typename std::stack<T>::container_type::const_reverse_iterator	const_reverse_iterator;
 	iterator begin(void) {return this->c.begin();}
 	iterator end(void) {return this->c.end();}
-	const_iterator cbegin(void) {return this->c.cbegin();}
-	const_iterator cend(void) {return this->c.cend();}
+	const_iterator cbegin(void) {return this->c.begin();}
+	const_iterator cend(void) {return this->c.end();}
 	reverse_iterator rbegin(void) {return this->c.rbegin();}
 	reverse_iterator rend(void) {return this->c.rend();}
-	const_iterator crbegin(void) {return this->c.crbegin();}
-	const_iterator crend(void) {return this->c.crend();}
+	const_iterator crbegin(void) {return this->c.rbegin();}
+	const_iterator crend(void) {return this->c.rend();}
 };
 
 #endif
