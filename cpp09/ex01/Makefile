@@ -1,10 +1,11 @@
 CC = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-NAME = EasyFind
+NAME = RPN
 
 SRCS = \
 	main.cpp \
+	RPN.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
