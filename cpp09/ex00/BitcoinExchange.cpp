@@ -149,7 +149,7 @@ void BitcoinExchange::printLine(const std::string & line) {
 	value_str = line.substr(i + 2, line.length() - 1);
 
 	// 이거 없으면 음수 예외처리가 안댐 ;; ㅎㅎ
-	if (value_str[0] == '-')
+	if (value_str[0] == '-' && isFloatStr(value_str.substr(1, value_str.length() - 1)))
 		return (printError(ERR_SMALLNUM));
 
 	if (!isValidDate(date) || !isFloatStr(value_str)) {
