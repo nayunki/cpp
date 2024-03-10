@@ -1,5 +1,7 @@
 CC = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
+CXXFLAGS = -std=c++98
+# -fsanitize=address
+# -Wall -Wextra -Werror
 
 NAME = PmergeMe
 
