@@ -19,6 +19,9 @@ public:
 	class	invalidInput : public std::exception {
 		const char *what() const throw();
 	};
+	class	divideByZero : public std::exception {
+		const char *what() const throw();
+	};
 };
 
 #endif

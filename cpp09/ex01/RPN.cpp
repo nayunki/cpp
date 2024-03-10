@@ -18,6 +18,10 @@ const char *RPN::invalidInput::what() const throw() {
 	return "Error";
 }
 
+const char *RPN::divideByZero::what() const throw() {
+	return "Cannot divide by zero !!";
+}
+
 int RPN::calculate(int b, int a, char oper) {
     if (oper == '+')
         return (a + b);
@@ -25,8 +29,11 @@ int RPN::calculate(int b, int a, char oper) {
         return (a - b);
     else if (oper == '*')
         return (a * b);
-    else if (oper == '/')
+    else if (oper == '/') {
+		if (b == 0)
+			throw divideByZero();
         return (a / b);
+	}
     else
         throw invalidInput();
 }
@@ -48,13 +55,15 @@ void RPN::printStack() {
     std::cout << std::endl;
 }
 
-// 0으로 나누면 0됨 ;; c++엔 inf 있지않나?.......
 void RPN::execute(const std::string & input) {
     // "7 7 * 7 -"
     // 숫자 : 스택에 push
     // 연산자 : 숫자 두개 꺼내서 계산 후, 결과를 다시 push
 
-    // 홀수인덱스는 띄어쓰기인지 검사하는 로직 추가 ㅠㅠ
+	for (size_t i = 0; i < input.length(); i++) {
+        if (i % 2 == 1 && input[i] != ' ')
+			throw invalidInput();
+    }
 
     for (size_t i = 0; i < input.length(); i++) {
         if (input[i] == ' ')
