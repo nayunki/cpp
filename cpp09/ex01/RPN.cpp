@@ -54,8 +54,6 @@ void RPN::execute(const std::string & input) {
     // 숫자 : 스택에 push
     // 연산자 : 숫자 두개 꺼내서 계산 후, 결과를 다시 push
 
-    if (input.length() < 5)
-        throw invalidInput();
     // 홀수인덱스는 띄어쓰기인지 검사하는 로직 추가 ㅠㅠ
 
     for (size_t i = 0; i < input.length(); i++) {
@@ -67,8 +65,6 @@ void RPN::execute(const std::string & input) {
             this->numbers.push(calculate(topAndPop(), topAndPop(), input[i]));
         else
             throw invalidInput();
-        // std::cout << i << "th execution : ";
-        // printStack();
     }
     if (this->numbers.size() % 2 != 1)
         throw invalidInput();

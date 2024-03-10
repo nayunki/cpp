@@ -5,6 +5,7 @@
 # include <vector>
 # include <deque>
 # include <algorithm>
+# include <ctime>
 
 class PmergeMe {
 private:
@@ -19,7 +20,6 @@ public:
     PmergeMe(const PmergeMe & obj);
     PmergeMe & operator=(const PmergeMe & obj);
     ~PmergeMe();
-    void printInfo();
     void execute(char **argv);
 	class	invalidInput : public std::exception {
 		const char *what() const throw();

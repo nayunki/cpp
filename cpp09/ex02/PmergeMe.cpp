@@ -30,14 +30,10 @@ void PmergeMe::printVector() {
 
 void PmergeMe::printDeque() {
     std::cout << "Print Deque\n";
-    for (size_t i = 0; i < vec.size(); i++) {
+    for (size_t i = 0; i < deq.size(); i++) {
         std::cout << deq[i] << " ";
     }
     std::cout << std::endl;   
-}
-
-void PmergeMe::printInfo() {
-
 }
 
 void PmergeMe::execute(char **argv) {
@@ -47,7 +43,7 @@ void PmergeMe::execute(char **argv) {
     }
     std::cout << std::endl;
 
-    sortByVector();
+    sortVector();
 
     std::cout << "After: ";
     for (size_t i = 0; vec[i]; i++) {
@@ -55,7 +51,7 @@ void PmergeMe::execute(char **argv) {
     }
     std::cout << std::endl;
 
-    sortByDeque();
+    sortDeque();
 
     std::cout << "Time to process a range of " << vec.size()
      << " elements with std::vector : " << vecTime << "us\n";
