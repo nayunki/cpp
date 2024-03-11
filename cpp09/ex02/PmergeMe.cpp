@@ -56,10 +56,10 @@ void PmergeMe::execute(char **argv) {
     clock_t fin = clock();
     vecTime = static_cast<double>(fin - start);
 
+    std::cout << "After: ";
     printVector(mainVec);
 
 /*
-    std::cout << "After: ";
     for (size_t i = 0; argVec.size(); i++) {
         std::cout << argVec[i] << " ";
     }
@@ -78,11 +78,16 @@ void PmergeMe::execute(char **argv) {
 }
 
 // 0 1 1 3 5 11 21 ..
+// index 22까지만 하는게 좋을걸..
+// 임의로 int 최댓값 기준 분기 가능 ?? ㅠㅠ 제발요
 void PmergeMe::makeJacobArr() {
 	jacobVec.push_back(0);
     jacobVec.push_back(1);
 
-    for (size_t i = 0; i < pairVec.size() - 2; i++) {
+    int end = pairVec.size();
+    if (pairVec.size() > 22)
+        end = 23;
+    for (size_t i = 0; i < end; i++) {
         jacobVec.push_back(jacobVec[i + 1] + 2 * jacobVec[i]);
     }
 }
@@ -95,7 +100,7 @@ void PmergeMe::sortVector() {
         else
             this->pairVec.push_back(std::make_pair(argVec[i], argVec[i + 1]));
 	}
-    // 인자 홀수인 경우 마지막 남은 하나 어디에 저장 ?
+    // 인자 홀수인 경우 마지막 남은 하나 저장
     int tmp = -1;
     if (argVec.size() % 2 == 1)
         tmp = *(argVec.end() - 1);
@@ -111,18 +116,35 @@ void PmergeMe::sortVector() {
         this->pendVec.push_back(this->pairVec[i].second);
     }
 
+    std::cout << "mainVec : ";
     printVector(mainVec);
 
     makeJacobArr();
+    // 0 1 1 3 5 11 21 .. pendVec의 1번째 요소부터 뽑는다고 할 때,
+    // 1, 그 다음 3, 2, 그 다음 5, 4, 그 다음 11 10 9 8 7 6 그 다음 21 ~ 12
+    // jacobVec[2]부터 사용하는 건 마즘 근데 그것도 이미 앞에 뒀으니 
+    // pend[jacobVec[3]]부터 꺼낼거야
+    // pend가 3개 있으면 2번만 꺼내면 되니까 1 < pairVec.size()하고, 
 
+    std::cout << "jacobVec : ";
+    printVector(jacobVec);
+    std::cout << "pendVec : ";
     printVector(pendVec);
 
     // pend를 하나씩 빼서 main의 적절한 위치에 넣을 거외다..
-	for (size_t i = 1; i < pairVec.size(); i++) {
-		int endIdx = std::find(mainVec.begin(), mainVec.end(), pairVec[jacobVec[i]].first) - mainVec.begin();
-        std::cout << "i : " << i << " v : " << pairVec[jacobVec[i]].second << "\n";
-		bSearchVec(endIdx, pairVec[jacobVec[i]].second);
-	}
+    int oldJacob = 1;
+    int newJacob;
+    for (size_t i = 2; i < pairVec.size(); i++) {
+        newJacob = jacobVec[i + 1];
+        while (newJacob > oldJacob) {
+            if (newJacob - 1 < pairVec.size()) {
+                int endIdx = std::find(mainVec.begin(), mainVec.end(), pairVec[newJacob - 1].first) - mainVec.begin();
+                bSearchVec(endIdx, pairVec[newJacob - 1].second);
+            }
+            newJacob--;
+        }
+        oldJacob = jacobVec[i + 1];
+    }
 	if (tmp != -1) // 인자로 홀수개 받아서 하나 남을때
 		bSearchVec(mainVec.size() - 1, tmp);
 }
