@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 		if (argc != 2)
 			throw BitcoinExchange::invalidInput();
 
-		std::cout.precision(2);
+		std::cout.precision(7);
 		BitcoinExchange btc;
 		btc.parseDb("data.csv");
 		// btc.printDbMap(); // data.csv 저장 확인 완료
