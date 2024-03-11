@@ -119,18 +119,17 @@ void BitcoinExchange::parseDb(const std::string & dbName) {
 		if (dbFile.eof())
 			break ;
 		getline(dbFile, dbLine);
-		addLine(dbLine); // 내부에서 한줄씩 db 유효성검사
+		if (dbLine != "")
+			addLine(dbLine); // 내부에서 한줄씩 db 유효성검사
 	}
 }
 
 // lower_bound 값 찾아서 계산 후 float return 하기
 float BitcoinExchange::getMultiplied(std::string date, float value) {
 	std::map<std::string, float>::iterator it = dbMap.upper_bound(date);
-	if (it == dbMap.begin())
-		throw invalidInput(); // data.csv 파일의 처음 date보다 더 이전이라서 값을 구할 수 업듬
-	// lower_bound vs upper_bound : date보다 바로 전 / date보다 바로 뒤
+	if (it == dbMap.begin()) // data.csv 파일의 처음 date보다 더 이전이라서 값을 구할 수 업듬
+		throw invalidInput();
 	it--;
-	// upper_bound에서 -1하면 lower_bound임. 우리가 lower_bound를 바로 못 쓴 이유는 ..
 	return (it->second * value);
 }
 
@@ -148,7 +147,6 @@ void BitcoinExchange::printLine(const std::string & line) {
 	date = line.substr(0, i - 1);
 	value_str = line.substr(i + 2, line.length() - 1);
 
-	// 이거 없으면 음수 예외처리가 안댐 ;; ㅎㅎ
 	if (value_str[0] == '-' && isFloatStr(value_str.substr(1, value_str.length() - 1)))
 		return (printError(ERR_SMALLNUM));
 
@@ -181,6 +179,7 @@ void BitcoinExchange::parseInput(const std::string & inputName) {
 		if (inFile.eof())
 			break ;
 		getline(inFile, line);
-		printLine(line);
+		if (line != "")
+			printLine(line);
 	}
 }
