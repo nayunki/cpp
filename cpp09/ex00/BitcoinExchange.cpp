@@ -127,7 +127,6 @@ void BitcoinExchange::parseDb(const std::string & dbName) {
 // lower_bound 값 찾아서 계산 후 float return 하기
 float BitcoinExchange::getMultiplied(std::string date, float value) {
 	std::map<std::string, float>::iterator it = dbMap.upper_bound(date);
-	// 그럼 db보다 더 미래의 값이 들어오면 it는 dbMap.end()가 되는거고 어차피 하나 빼니까 괜차는거임 ?ㅅ?
 	if (it == dbMap.begin()) // data.csv 파일의 처음 date보다 더 이전이라서 값을 구할 수 업듬
 		throw invalidInput();
 	it--;
