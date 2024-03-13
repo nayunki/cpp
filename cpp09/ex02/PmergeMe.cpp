@@ -34,13 +34,13 @@ void PmergeMe::printDeque(std::deque<int> deq) {
 }
 
 void PmergeMe::putArgToCtn(char **argv) {
-    for (size_t i = 1; argv[i]; i++) {
-        this->arg.push_back(argv[i]); // char *
-    }
-
     int num;
-    for (size_t i = 0; i < arg.size(); i++) {
-        num = static_cast<int>(strtod(arg[i], NULL));
+    for (size_t i = 1; argv[i]; i++) {
+        for (size_t j = 0; argv[i][j]; j++) {
+            if (!std::isdigit(argv[i][j]))
+                throw invalidInput();
+        }
+        num = static_cast<int>(strtod(argv[i], NULL));
         if (num <= 0)
             throw invalidInput();
         this->vec.push_back(num);

@@ -6,19 +6,19 @@
 # include <deque>
 # include <algorithm>
 # include <ctime>
+# include <cctype>
 
 class PmergeMe {
 private:
-    std::vector<char *> arg;
+    std::vector<size_t> jacobVec;
     size_t jacobIdx;
     size_t insertionCount;
-    std::vector<size_t> jacobVec;
 
-    double vecTime;
     std::vector<int> vec;
+    double vecTime;
 
-    double deqTime;
     std::deque<int> deq;
+    double deqTime;
 
     void putArgToCtn(char **argv);
     void makeJacobArr();
