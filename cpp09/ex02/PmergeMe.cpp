@@ -107,8 +107,8 @@ void PmergeMe::bSearchVec(size_t idx, size_t elementSize, std::vector<int> & mai
     while (*pendIt == 0)
         pendIt++;
 
+    // pend의 맨 앞 요소는 항상 main보다 작음
     if (idx == 0) {
-        // vec.insert(pos, first, last) : first부터 last 전까지 원소들을 pos에 삽입
         mainVec.insert(mainIt, pendIt, pendIt + elementSize);
         return;
     }
@@ -124,22 +124,23 @@ void PmergeMe::bSearchVec(size_t idx, size_t elementSize, std::vector<int> & mai
     this->insertionCount++;
 }
 
-void PmergeMe::insertVec(size_t len, size_t elementSize) {
+void PmergeMe::insertVec(size_t pairCount, size_t elementSize) {
     this->jacobIdx = 0;
     this->insertionCount = 0;
 
     std::vector<int> mainVec;
     std::vector<int> pendVec;
     std::vector<int>::iterator it = this->vec.begin();
-    for (size_t i = 0; i < len; i++) {
-        if (i % 2 == 1 || i == len - 1) // 홀수번째거나 마지막
+    for (size_t i = 0; i < pairCount; i++) {
+        if (i % 2 == 1 || i == pairCount - 1)
             pendVec.insert(pendVec.end(), it + i * elementSize, it + (i + 1) * elementSize);
+            // vec.insert(pos, first, last) : first부터 last 전까지 원소들을 pos에 삽입
         else
             mainVec.insert(mainVec.end(), it + i * elementSize, it + (i + 1) * elementSize);
     }
 
     size_t idx = 0;
-    size_t pendVecLen = len / 2 + len % 2;
+    size_t pendVecLen = pairCount / 2 + pairCount % 2;
     for (size_t i = 0; i < pendVecLen; i++) {
         idx = setIndex(idx);
         if (idx >= pendVecLen)
@@ -149,19 +150,19 @@ void PmergeMe::insertVec(size_t len, size_t elementSize) {
     this->vec = mainVec;
 }
 
-void PmergeMe::sortVector(size_t len, size_t elementSize) {
-    if (len == 1)
+void PmergeMe::sortVector(size_t pairCount, size_t elementSize) {
+    if (pairCount == 1)
         return ;
 
-    std::vector<int>::iterator it = this->vec.begin();
-    for (size_t i = 0; i < len; i += 2) {
-        std::vector<int>::iterator first = it + i * elementSize;
-        std::vector<int>::iterator second = it + (i + 1) * elementSize;
+    for (size_t i = 0; i < pairCount; i += 2) {
+        std::vector<int>::iterator first = this->vec.begin() + i * elementSize;
+        std::vector<int>::iterator second = this->vec.begin() + (i + 1) * elementSize;
         if (*first < *second)
+            // swap_ranges(first, last, swapFirst) : first부터 last를 swapFirst부터 last-first 만큼 swap
             std::swap_ranges(first, second, second);
     }
-    sortVector(len / 2, elementSize * 2);
-    insertVec(len, elementSize);
+    sortVector(pairCount / 2, elementSize * 2);
+    insertVec(pairCount, elementSize);
 }
 
 ////////////////////////////sort deque////////////////////////////
@@ -191,22 +192,22 @@ void PmergeMe::bSearchDeq(size_t idx, size_t elementSize, std::deque<int> & main
     this->insertionCount++;
 }
 
-void PmergeMe::insertDeq(size_t len, size_t elementSize) {
+void PmergeMe::insertDeq(size_t pairCount, size_t elementSize) {
     this->jacobIdx = 0;
     this->insertionCount = 0;
 
     std::deque<int> mainDeq;
     std::deque<int> pendDeq;
     std::deque<int>::iterator it = this->deq.begin();
-    for (size_t i = 0; i < len; i++) {
-        if (i % 2 == 1 || i == len - 1)
+    for (size_t i = 0; i < pairCount; i++) {
+        if (i % 2 == 1 || i == pairCount - 1)
             pendDeq.insert(pendDeq.end(), it + i * elementSize, it + (i + 1) * elementSize);
         else
             mainDeq.insert(mainDeq.end(), it + i * elementSize, it + (i + 1) * elementSize);
     }
 
     size_t idx = 0;
-    size_t pendDeqLen = len / 2 + len % 2;
+    size_t pendDeqLen = pairCount / 2 + pairCount % 2;
     for (size_t i = 0; i < pendDeqLen; i++) {
         idx = setIndex(idx);
         if (idx >= pendDeqLen)
@@ -216,17 +217,17 @@ void PmergeMe::insertDeq(size_t len, size_t elementSize) {
     deq = mainDeq;
 }
 
-void PmergeMe::sortDeque(size_t len, size_t elementSize) {
-    if (len == 1)
+void PmergeMe::sortDeque(size_t pairCount, size_t elementSize) {
+    if (pairCount == 1)
         return ;
 
     std::deque<int>::iterator it = this->deq.begin();
-    for (size_t i = 0; i < len; i += 2) {
+    for (size_t i = 0; i < pairCount; i += 2) {
         std::deque<int>::iterator first = it + i * elementSize;
         std::deque<int>::iterator second = it + (i + 1) * elementSize;
         if (*first < *second)
             std::swap_ranges(first, second, second);
     }
-    sortDeque(len / 2, elementSize * 2);
-    insertDeq(len, elementSize);
+    sortDeque(pairCount / 2, elementSize * 2);
+    insertDeq(pairCount, elementSize);
 }

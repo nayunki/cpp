@@ -27,12 +27,12 @@ private:
     size_t setIndex(size_t currIdx);
 
     void bSearchVec(size_t idx, size_t elementSize, std::vector<int> & mainVec, std::vector<int> & pendVec);
-    void insertVec(size_t len, size_t elementSize);
-    void sortVector(size_t len, size_t elementSize);
+    void insertVec(size_t pairCount, size_t elementSize);
+    void sortVector(size_t pairCount, size_t elementSize);
 
     void bSearchDeq(size_t idx, size_t elementSize, std::deque<int> & mainDeq, std::deque<int> & pendDeq);
-    void insertDeq(size_t len, size_t elementSize);
-    void sortDeque(size_t len, size_t elementSize);
+    void insertDeq(size_t pairCount, size_t elementSize);
+    void sortDeque(size_t pairCount, size_t elementSize);
 
     PmergeMe(const PmergeMe & obj);
     PmergeMe & operator=(const PmergeMe & obj);
