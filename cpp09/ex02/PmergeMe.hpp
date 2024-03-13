@@ -2,7 +2,7 @@
 # define PMERGEME_HPP
 
 # include <iostream>
-# include <vector> // pair도 포함
+# include <vector>
 # include <deque>
 # include <algorithm>
 # include <ctime>
@@ -10,42 +10,34 @@
 class PmergeMe {
 private:
     std::vector<char *> arg;
-
-    std::vector<int> argVec;
-    std::vector<int> jacobVec;
-    std::vector<int> mainVec;
-    std::vector<int> pendVec;
-    std::vector<int> sortedVec;
-    std::vector<std::pair<int, int> > pairVec;
-
-    std::deque<int> argDeq;
-    std::deque<int> jacobDeq;
-    std::deque<int> mainDeq;
-    std::deque<int> pendDeq;
-    std::deque<int> sortedDeq;
-    std::deque<std::pair<int, int> > pairDeq;
+    size_t jacobIdx;
+    size_t insertionCount;
+    std::vector<size_t> jacobVec;
 
     double vecTime;
+    std::vector<int> argVec;
+
     double deqTime;
+    std::deque<int> argDeq;
 
     void putArgToCtn(char **argv);
+    void makeJacobArr();
     void printVector(std::vector<int> vec);
-    void makeJacobArrVec();
-    void bSearchVec(int end, int target);
-    void mergePairVec(int begin, int mid, int end);
-    void sortPairVec(int begin, int end);
-    void sortVector();
-
     void printDeque(std::deque<int> deq);
-    void makeJacobArrDeq();
-    void bSearchDeq(int end, int target);
-    void mergePairDeq(int begin, int mid, int end);
-    void sortPairDeq(int begin, int end);
-    void sortDeque();
-public:
-    PmergeMe();
+    size_t setIndex(size_t currIdx);
+
+    void bSearchVec(size_t idx, size_t elementSize, std::vector<int> & mainVec, std::vector<int> & pendVec);
+    void insertVec(size_t len, size_t elementSize, std::vector<int> & mainVec, std::vector<int> & pendVec);
+    void sortVector(size_t len, size_t elementSize);
+
+    void bSearchDeq(size_t idx, size_t elementSize, std::deque<int> & mainDeq, std::deque<int> & pendDeq);
+    void insertDeq(size_t len, size_t elementSize, std::deque<int> & mainDeq, std::deque<int> & pendDeq);
+    void sortDeque(size_t len, size_t elementSize);
+
     PmergeMe(const PmergeMe & obj);
     PmergeMe & operator=(const PmergeMe & obj);
+public:
+    PmergeMe();
     ~PmergeMe();
     void execute(char **argv);
 	class	invalidInput : public std::exception {
