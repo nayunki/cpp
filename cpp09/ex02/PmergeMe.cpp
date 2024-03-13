@@ -43,8 +43,8 @@ void PmergeMe::putArgToCtn(char **argv) {
         num = static_cast<int>(strtod(arg[i], NULL));
         if (num <= 0)
             throw invalidInput();
-        this->argVec.push_back(num);
-        this->argDeq.push_back(num);
+        this->vec.push_back(num);
+        this->deq.push_back(num);
     }
 }
 
@@ -60,26 +60,27 @@ void PmergeMe::makeJacobArr() {
 
 void PmergeMe::execute(char **argv) {
     putArgToCtn(argv);
-    std::cout << "Before: ";
-    printVector(argVec);
     makeJacobArr();
 
+    std::cout << "\n\nBefore: ";
+    printVector(vec);
+
     clock_t start = clock();
-    sortVector(argVec.size(), 1);
+    sortVector(vec.size(), 1);
     clock_t fin = clock();
     vecTime = static_cast<double>(fin - start);
 
-    std::cout << "After: ";
-    printVector(argVec);
+    std::cout << "\n\nAfter: ";
+    printVector(vec);
 
     start = clock();
-    sortDeque(argDeq.size(), 1);
+    sortDeque(deq.size(), 1);
     fin = clock();
     deqTime = static_cast<double>(fin - start);
 
-    std::cout << "Time to process a range of " << argVec.size()
+    std::cout << "\n\nTime to process a range of " << vec.size()
      << " elements with std::vector : " << vecTime << "us\n";
-    std::cout << "Time to process a range of " << argDeq.size()
+    std::cout << "Time to process a range of " << deq.size()
      << " elements with std::deque : " << deqTime << "us\n";
 }
 
@@ -123,12 +124,13 @@ void PmergeMe::bSearchVec(size_t idx, size_t elementSize, std::vector<int> & mai
     this->insertionCount++;
 }
 
-void PmergeMe::insertVec(size_t len, size_t elementSize, std::vector<int> & mainVec, std::vector<int> & pendVec) {
+void PmergeMe::insertVec(size_t len, size_t elementSize) {
     this->jacobIdx = 0;
     this->insertionCount = 0;
-    size_t pendVecLen = len / 2 + len % 2;
-    std::vector<int>::iterator it = this->argVec.begin();
 
+    std::vector<int> mainVec;
+    std::vector<int> pendVec;
+    std::vector<int>::iterator it = this->vec.begin();
     for (size_t i = 0; i < len; i++) {
         if (i % 2 == 1 || i == len - 1) // 홀수번째거나 마지막
             pendVec.insert(pendVec.end(), it + i * elementSize, it + (i + 1) * elementSize);
@@ -137,23 +139,21 @@ void PmergeMe::insertVec(size_t len, size_t elementSize, std::vector<int> & main
     }
 
     size_t idx = 0;
+    size_t pendVecLen = len / 2 + len % 2;
     for (size_t i = 0; i < pendVecLen; i++) {
         idx = setIndex(idx);
         if (idx >= pendVecLen)
             idx = pendVecLen;
         bSearchVec(idx - 1, elementSize, mainVec, pendVec);
     }
-    this->argVec = mainVec;
+    this->vec = mainVec;
 }
 
 void PmergeMe::sortVector(size_t len, size_t elementSize) {
     if (len == 1)
         return ;
-    
-    std::vector<int> mainVec;
-    std::vector<int> pendVec;
 
-    std::vector<int>::iterator it = this->argVec.begin();
+    std::vector<int>::iterator it = this->vec.begin();
     for (size_t i = 0; i < len; i += 2) {
         std::vector<int>::iterator first = it + i * elementSize;
         std::vector<int>::iterator second = it + (i + 1) * elementSize;
@@ -161,7 +161,7 @@ void PmergeMe::sortVector(size_t len, size_t elementSize) {
             std::swap_ranges(first, second, second);
     }
     sortVector(len / 2, elementSize * 2);
-    insertVec(len, elementSize, mainVec, pendVec);
+    insertVec(len, elementSize);
 }
 
 ////////////////////////////sort deque////////////////////////////
@@ -191,13 +191,13 @@ void PmergeMe::bSearchDeq(size_t idx, size_t elementSize, std::deque<int> & main
     this->insertionCount++;
 }
 
-void PmergeMe::insertDeq(size_t len, size_t elementSize, std::deque<int> & mainDeq, std::deque<int> & pendDeq) {
+void PmergeMe::insertDeq(size_t len, size_t elementSize) {
     this->jacobIdx = 0;
     this->insertionCount = 0;
-    size_t pendDeqLen = len / 2 + len % 2;
-    size_t idx = 0;
-    std::deque<int>::iterator it = this->argDeq.begin();
 
+    std::deque<int> mainDeq;
+    std::deque<int> pendDeq;
+    std::deque<int>::iterator it = this->deq.begin();
     for (size_t i = 0; i < len; i++) {
         if (i % 2 == 1 || i == len - 1)
             pendDeq.insert(pendDeq.end(), it + i * elementSize, it + (i + 1) * elementSize);
@@ -205,30 +205,28 @@ void PmergeMe::insertDeq(size_t len, size_t elementSize, std::deque<int> & mainD
             mainDeq.insert(mainDeq.end(), it + i * elementSize, it + (i + 1) * elementSize);
     }
 
+    size_t idx = 0;
+    size_t pendDeqLen = len / 2 + len % 2;
     for (size_t i = 0; i < pendDeqLen; i++) {
         idx = setIndex(idx);
         if (idx >= pendDeqLen)
             idx = pendDeqLen;
         bSearchDeq(idx - 1, elementSize, mainDeq, pendDeq);
     }
-    argDeq = mainDeq;
+    deq = mainDeq;
 }
 
 void PmergeMe::sortDeque(size_t len, size_t elementSize) {
     if (len == 1)
         return ;
-    
-    std::deque<int> mainDeq;
-    std::deque<int> pendDeq;
 
-    std::deque<int>::iterator it = this->argDeq.begin();
+    std::deque<int>::iterator it = this->deq.begin();
     for (size_t i = 0; i < len; i += 2) {
         std::deque<int>::iterator first = it + i * elementSize;
         std::deque<int>::iterator second = it + (i + 1) * elementSize;
         if (*first < *second)
             std::swap_ranges(first, second, second);
     }
-
     sortDeque(len / 2, elementSize * 2);
-    insertDeq(len, elementSize, mainDeq, pendDeq);
+    insertDeq(len, elementSize);
 }
